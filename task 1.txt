@@ -1,0 +1,97 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class ATMSystem {
+    private Map<String, String> userCredentials;
+    private Map<String, Double> userBalances;
+
+    public ATMSystem() {
+        userCredentials = new HashMap<>();
+        userBalances = new HashMap<>();
+        // Add sample user for demonstration
+        userCredentials.put("123456", "7890"); // UserID -> PIN
+        userBalances.put("123456", 1000.0); // UserID -> Initial balance
+    }
+
+    public static void main(String[] args) {
+        ATMSystem atm = new ATMSystem();
+        atm.run();
+    }
+
+    private void run() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the ATM System");
+        System.out.print("Enter your user ID: ");
+        String userId = scanner.nextLine();
+
+        System.out.print("Enter your PIN: ");
+        String pin = scanner.nextLine();
+
+        if (authenticateUser(userId, pin)) {
+            displayMenu();
+            int choice;
+            do {
+                System.out.print("Enter your choice: ");
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                switch (choice) {
+                    case 1:
+                        displayTransactionHistory(userId);
+                        break;
+                    case 2:
+                        withdraw(userId);
+                        break;
+                    case 3:
+                        deposit(userId);
+                        break;
+                    case 4:
+                        transfer(userId);
+                        break;
+                    case 5:
+                        System.out.println("Thank you for using the ATM. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } while (choice != 5);
+        } else {
+            System.out.println("Authentication failed. Exiting...");
+        }
+    }
+
+    private boolean authenticateUser(String userId, String pin) {
+        return userCredentials.containsKey(userId) && userCredentials.get(userId).equals(pin);
+    }
+
+    private void displayMenu() {
+        System.out.println("\nATM Menu:");
+        System.out.println("1. Transaction History");
+        System.out.println("2. Withdraw");
+        System.out.println("3. Deposit");
+        System.out.println("4. Transfer");
+        System.out.println("5. Quit");
+    }
+
+    private void displayTransactionHistory(String userId) {
+        // Implement transaction history display logic here
+        System.out.println("Transaction history for user " + userId);
+    }
+
+    private void withdraw(String userId) {
+        // Implement withdrawal logic here
+        System.out.println("Withdrawal for user " + userId);
+    }
+
+    private void deposit(String userId) {
+        // Implement deposit logic here
+        System.out.println("Deposit for user " + userId);
+    }
+
+    private void transfer(String userId) {
+        // Implement transfer logic here
+        System.out.println("Transfer for user " + userId);
+    }
+}
